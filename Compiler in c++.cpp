@@ -119,6 +119,83 @@ string removeComments(string prgm)
     return res;
 }
 
+void detectTokens(char* str)
+{
+    int left = 0, right = 0,j,i;
+    char ch;
+    int length = strlen(str);
+    while (right <= length && left <= right)
+    {
+        if (isValidDelimiter(str[right]) == false)
+            right++;
+        if (isValidDelimiter(str[right]) == true && left == right)
+        {
+            if (isValidOperator(str[right]) == true)
+                printf("Valid operator : '%c'\n", str[right]);
+            right++;
+            left = right;
+        }
+        else if (isValidDelimiter(str[right]) == true && left != right || (right == length && left !=       right))
+        {
+            char* subStr = subString(str, left, right - 1);
+            if (isValidKeyword(subStr) == true)
+                printf("Valid keyword : '%s'\n", subStr);
+            else if (isValidInteger(subStr) == true)
+                printf("Valid Integer : '%s'\n", subStr);
+            else if (isRealNumber(subStr) == true)
+                printf("Real Number : '%s'\n", subStr);
+            else if (isvalidIdentifier(subStr) == true
+                     && isValidDelimiter(str[right - 1]) == false)
+                printf("Valid Identifier : '%s'\n", subStr);
+            else if (isvalidIdentifier(subStr) == false
+                     && isValidDelimiter(str[right - 1]) == false)
+            {
+                printf("Invalid Identifier : '%s'", subStr);
+                char sub1[100];
+                strcpy(sub1,subStr);
+                for(i=0; subStr[i]!='\0'; i++)
+                {
+                    if((str[0]>=33 && str[0]<=35) ||
+                            (str[0]>=37 && str[0]<=47) || (str[0]>=91 && str[0]<=96)
+                            || (str[0]>=123 && str[0]<=127))
+                    {
+                        for(j=0; subStr[j]!='\0'; j++)
+                        {
+                            if(subStr[j+1]=='\0')
+                            {
+                                break;
+                            }
+                            subStr[j]=subStr[j+1];
+                        }
+                        subStr[j]='\0';
+                    }
+                    if(subStr[0]>=48 && subStr[0]<=57)
+                {
+                    ch=subStr[0];
+                        for(j=0; subStr[j]!='\0'; j++)
+                        {
+                            if(subStr[j+1]=='\0')
+                            {
+                                break;
+                            }
+                            subStr[j]=subStr[j+1];
+                        }
+                        subStr[j]=ch;
+                        subStr[j+1]='\0';
+                    }
+                    if((subStr[i]>=65 && subStr[i]<=90) || (subStr[i]>=97 && subStr[i]<=122) || subStr[i]==36)
+                {
+                    break;
+                }
+
+            }
+            printf("\t(Suggested Identifier: %s, _%s)\n",subStr,sub1);
+            }
+            left = right;
+        }
+    }
+    return;
+}
 int main()
 {
     string prgm;
