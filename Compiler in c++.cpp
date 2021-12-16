@@ -205,6 +205,20 @@ int main()
     cout << "\n\nModified Program \n";
     new_prgm = removeComments(prgm);
     cout << new_prgm;
+    Israfil Hasan, [12/16/2021 11:39 PM]
+for(int i=0;new_prgm[i]!='\0';i++)
+    {
+        if(new_prgm[i]=='\n')
+        {
+            str[i]=' ';
+            continue;
+        }
+        str[i]=new_prgm[i];
+    }
+
+Israfil Hasan, [12/16/2021 11:39 PM]
+printf("\n\nAll Tokens are : \n");
+    detectTokens(str);
 
 
     return 0;
